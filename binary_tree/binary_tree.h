@@ -10,7 +10,7 @@ typedef struct BiTreeNode
 
 BiNode* createABinaryTree();
 void printBiTreePreOrder(BiNode* root);
-
+void printBiTreeByLayerOrder(BiNode* root);
 
 
 
