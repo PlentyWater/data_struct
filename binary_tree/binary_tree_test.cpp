@@ -2,6 +2,6 @@
 
 int main()
 {
-    BiNode *root = createABinaryTree();
+    BiNode *root = createBinaryTreebyLayerOrder();
     printBiTreeByLayerOrder(root);
 }

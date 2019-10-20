@@ -1,11 +1,14 @@
 #include <cstdlib>
 #include <iostream>
 #include <queue>
+#include <vector>
+#include <cmath>
 #include "binary_tree.h"
 
-#define NULL_INTEGER 666666 
+#define NULL_INTEGER 666666
 
-BiNode* createABinaryTree()
+//create a binary tree by pos order
+BiNode* createABinaryTreebyPosOrder()
 {
     int x;
     std::cout << "please input an integer(999999 is null)" << std::endl;
@@ -13,31 +16,77 @@ BiNode* createABinaryTree()
     if(x != NULL_INTEGER)
     {
         BiNode *node = new BiNode;
-	if(node != NULL)
-	{
-	    node->x = x;
-	    node->rChild = NULL;
-	    node->lChild = NULL;
-	}
-	else
-	{
-	    std::cout << "new failed, no enough memory" << std::endl;
-	    return NULL;
-	}
+	    if(node != NULL)
+	    {
+	        node->x = x;
+	        node->rChild = NULL;
+	        node->lChild = NULL;
+	    }
+	    else
+	    {
+	        std::cout << "new failed, no enough memory" << std::endl;
+	        return NULL;
+	    }
         std::cout << "inpute left child" << std::endl;
-        node->lChild = createABinaryTree();
+        node->lChild = createABinaryTreebyPosOrder();
         std::cout << "input right child" << std::endl;
-        node->rChild = createABinaryTree();
-        
-        return node;	
-     } 
+        node->rChild = createABinaryTreebyPosOrder();
+
+        return node;
+     }
      else
      {
         std::cout << "NULL node!" << std::endl;
-	return NULL;
+	    return NULL;
      }
 }
 
+BiNode* createBinaryTreebyLayerOrder()
+{
+    std::vector<BiNode*> treeVec;
+
+    while(true) {
+        int x = 0;
+        char end = 0;
+        BiNode *node = NULL;
+        std::cout << "do all tree node are input(y/n):";
+        std::cin >> end;
+        if(end == 'y')
+            break;
+
+        std::cout << "please input an integer:";
+        std::cin >> x;
+        if(x != -666666) {
+            node = new BiNode();
+            if(node != NULL) {
+                node->x = x;
+                treeVec.push_back(node);
+            } else {
+                break;
+            }
+        } else {
+            node = NULL;
+            treeVec.push_back(node);
+        }
+    }
+
+    BiNode *root = NULL;
+    if(treeVec.size() > 0) {
+        root = treeVec[0];
+        BiNode *fatherNode = NULL;
+        BiNode *childNode = NULL;
+        int c = 1;
+        for(int i = 0; i < treeVec.size(); i++) {
+            fatherNode = treeVec[i];
+            if(fatherNode != NULL) {
+                fatherNode->lChild = treeVec[c++];
+                fatherNode->rChild = treeVec[c++];
+            }
+        }
+    }
+
+    return root;
+}
 void _printBiTreePreOrder(BiNode *root)
 {
     if(root == NULL)
@@ -48,18 +97,18 @@ void _printBiTreePreOrder(BiNode *root)
     std::cout << root->x;
     if(root->lChild != NULL)
     {
-        printBiTreePreOrder(root->lChild);
+        _printBiTreePreOrder(root->lChild);
     }
     if(root->rChild != NULL)
     {
-        printBiTreePreOrder(root->rChild);
+        _printBiTreePreOrder(root->rChild);
     }
 }
 
 void printBiTreePreOrder(BiNode *root)
 {
     _printBiTreePreOrder(root);
-    std::cout << std::endl;
+    std::cout << std::endl << std::endl;
 }
 
 void printBiTreeByLayerOrder(BiNode *root)
@@ -75,7 +124,7 @@ void printBiTreeByLayerOrder(BiNode *root)
     BiNode *nLast = NULL;
     BiNode *cur = NULL;
     int level = 1;
-    std::cout << "level " << level << ":";
+    std::cout << "level " << level << ": ";
     while(!treeQueue.empty())
     {
         cur = treeQueue.front();
@@ -98,8 +147,8 @@ void printBiTreeByLayerOrder(BiNode *root)
             std::cout << "some error, meet NULL pointer" << std::endl;
             return;
 	}
-        treeQueue.pop();
-        std::cout << cur->x << " ";
+    treeQueue.pop();
+    std::cout << cur->x << " ";
 	if(cur == last && !treeQueue.empty())
         {
             level++;

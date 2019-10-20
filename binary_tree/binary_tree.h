@@ -8,7 +8,8 @@ typedef struct BiTreeNode
     int x;
 }BiNode;
 
-BiNode* createABinaryTree();
+BiNode* createABinaryTreebyPosOrder();
+BiNode* createBinaryTreebyLayerOrder();
 void printBiTreePreOrder(BiNode* root);
 void printBiTreeByLayerOrder(BiNode* root);
 
