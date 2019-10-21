@@ -3,5 +3,5 @@
 int main()
 {
     BiNode *root = createBinaryTreebyLayerOrder();
-    printBiTreeByLayerOrder(root);
+    visitBiTreeunRecur(root);
 }

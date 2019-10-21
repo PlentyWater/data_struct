@@ -2,7 +2,7 @@
 #include <iostream>
 #include <queue>
 #include <vector>
-#include <cmath>
+#include <stack>
 #include "binary_tree.h"
 
 #define NULL_INTEGER 666666
@@ -108,16 +108,16 @@ void _printBiTreePreOrder(BiNode *root)
 void printBiTreePreOrder(BiNode *root)
 {
     _printBiTreePreOrder(root);
-    std::cout << std::endl << std::endl;
+    printf("\n");
 }
 
 void printBiTreeByLayerOrder(BiNode *root)
 {
-      if(root == NULL)
-      {
-          std::cout << "parameter error, root is NULL" << std::endl;
-          return;
-      }
+    if(root == NULL)
+    {
+        std::cout << "parameter error, root is NULL" << std::endl;
+        return;
+    }
     std::queue<BiNode*> treeQueue;
     treeQueue.push(root);
     BiNode *last = root;
@@ -140,21 +140,66 @@ void printBiTreeByLayerOrder(BiNode *root)
                 treeQueue.push(cur->rChild);
                 nLast = cur->rChild;
             }
-	}
+        }
         else
-	{
+        {
             std::cout << std::endl;
             std::cout << "some error, meet NULL pointer" << std::endl;
             return;
-	}
-    treeQueue.pop();
-    std::cout << cur->x << " ";
-	if(cur == last && !treeQueue.empty())
+        }
+        treeQueue.pop();
+        std::cout << cur->x << " ";
+        if(cur == last && !treeQueue.empty())
         {
             level++;
             std::cout << std::endl << "level " << level << ": ";
             last = nLast;
-	}
+        }
     }
+    printf("\n");
+}
+struct VNode {
+    BiNode *node;
+    bool lHanded;
+    bool rHanded;
+    bool visited;
+    VNode():lHanded(false), rHanded(false),visited(false){}
+};
+//visit biniary tree unrecursively
+void visitBiTreeunRecur(BiNode* root)
+{
+    if(root == NULL)
+        return;
+
+    std::stack<VNode*> vec;
+    VNode* vNode = new VNode();
+    vNode->node = root;
+    vec.push(vNode);
+    while(!vec.empty()) {
+        vNode = vec.top();
+        if(!vNode->visited) {
+            printf("%d  ", vNode->node->x);
+            vNode->visited = true;
+        }
+        if(!vNode->lHanded) {
+            if(vNode->node->lChild != NULL) {
+                VNode* vLNode = new VNode();
+                vLNode->node = vNode->node->lChild;
+                vec.push(vLNode);
+            }
+            vNode->lHanded = true;
+        } else if(!vNode->rHanded) {
+            if(vNode->node->rChild != NULL) {
+                VNode* vRNode = new VNode();
+                vRNode->node = vNode->node->rChild;
+                vec.push(vRNode);
+            }
+            vNode->rHanded = true;
+        } else {
+            delete vNode->node;
+            vec.pop();
+        }
+    }
+    printf("\n");
 }
 
