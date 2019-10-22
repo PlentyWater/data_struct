@@ -13,7 +13,8 @@ BiNode* createBinaryTreebyLayerOrder();
 void printBiTreePreOrder(BiNode* root);
 void printBiTreeByLayerOrder(BiNode* root);
 
-void visitBiTreeunRecur(BiNode* root);
+void visitBiTreebyPreOrderunRecur(BiNode* root);
+void visitBiTreebyInOrderunRecur(BiNode* root);
 
 
 

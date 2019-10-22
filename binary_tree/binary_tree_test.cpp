@@ -1,7 +1,11 @@
+#include <cstdio>
 #include "binary_tree.h"
 
 int main()
 {
     BiNode *root = createBinaryTreebyLayerOrder();
-    visitBiTreeunRecur(root);
+    //printf("Pre order:");
+    //visitBiTreebyPreOrderunRecur(root);
+    printf("In  order:");
+    visitBiTreebyInOrderunRecur(root);
 }
