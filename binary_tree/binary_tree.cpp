@@ -157,9 +157,10 @@ struct VNode {
     BiNode *node;
     bool lHanded;
     bool rHanded;
+    bool mHanded;
     bool visited;
     VNode():lHanded(false), rHanded(false),visited(false){}
-    VNode(BiNode *nod):lHanded(false), rHanded(false),visited(false),node(nod){}
+    VNode(BiNode *nod):lHanded(false), rHanded(false),visited(false),mHanded(false),node(nod){}
 };
 //visit biniary tree unrecursively
 void visitBiTreebyPreOrderunRecur(BiNode* root)
@@ -199,29 +200,24 @@ void visitBiTreebyPreOrderunRecur(BiNode* root)
     printf("\n");
 }
 
-void visitBiTreebyInOrderunRecur(BiNode* root)
+void visitBiTreebyPosOrderunRecur(BiNode* root)
 {
     if(root == NULL)
         return;
-    //printf("root->lchild:%p, root->rchild:%p", root->lChild, root->rChild);
     std::stack<VNode> vec;
     VNode vNode(root);
     vec.push(vNode);
     while(!vec.empty()) {
         VNode &tmpVNode = vec.top();
         if(!tmpVNode.lHanded) {
-            //printf("handle left child, x:%d, lchild:%p, rchild:%p\n", tmpVNode.node->x, tmpVNode.node->lChild, tmpVNode.node->rChild);
             tmpVNode.lHanded = true;
             if(tmpVNode.node->lChild != NULL) {
-                //printf("handle left push\n");
                 VNode tmp(tmpVNode.node->lChild);
                 vec.push(tmp);
             }
         } else if(!tmpVNode.rHanded) {
-            //printf("handle right child\n");
             tmpVNode.rHanded = true;
             if(tmpVNode.node->rChild != NULL) {
-                //printf("handle right push\n");
                 VNode tmp(tmpVNode.node->rChild);
                 vec.push(tmp);
             }
@@ -233,3 +229,33 @@ void visitBiTreebyInOrderunRecur(BiNode* root)
     printf("\n");
 }
 
+void visitBiTreebyInOrderunRecur(BiNode* root)
+{
+    if(root == NULL)
+        return;
+    std::stack<VNode> vec;
+    VNode vNode(root);
+    vec.push(vNode);
+    while(!vec.empty()) {
+        VNode &tmpVNode = vec.top();
+        if(!tmpVNode.lHanded) {
+            tmpVNode.lHanded = true;
+            if(tmpVNode.node->lChild != NULL) {
+                VNode tmp(tmpVNode.node->lChild);
+                vec.push(tmp);
+            }
+        } else if(!tmpVNode.mHanded) {
+            tmpVNode.mHanded = true;
+            printf("%d  ", tmpVNode.node->x);
+        } else if(!tmpVNode.rHanded) {
+            tmpVNode.rHanded = true;
+            if(tmpVNode.node->rChild != NULL) {
+                VNode tmp(tmpVNode.node->rChild);
+                vec.push(tmp);
+            }
+        } else {
+            vec.pop();
+        }
+    }
+    printf("\n");
+}

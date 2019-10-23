@@ -15,6 +15,7 @@ void printBiTreeByLayerOrder(BiNode* root);
 
 void visitBiTreebyPreOrderunRecur(BiNode* root);
 void visitBiTreebyInOrderunRecur(BiNode* root);
+void visitBiTreebyPosOrderunRecur(BiNode* root);
 
 
 

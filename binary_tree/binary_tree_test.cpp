@@ -10,4 +10,8 @@ int main()
     visitBiTreebyPreOrderunRecur(root);
     printf("In  order:\n");
     visitBiTreebyInOrderunRecur(root);
+    printf("Pos order:\n");
+    visitBiTreebyPosOrderunRecur(root);
+    printf("layer order:\n");
+    printBiTreeByLayerOrder(root);
 }
