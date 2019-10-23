@@ -44,20 +44,12 @@ BiNode* createABinaryTreebyPosOrder()
 BiNode* createBinaryTreebyLayerOrder()
 {
     std::vector<BiNode*> treeVec;
-
-    int n;
-    printf("total numbers:");
-    std::cin >> n;
-    while(n--) {
-        int x = 0;
-        char end = 0;
-        BiNode *node = NULL;
-        //std::cout << "do all tree node are input(y/n):";
-        //std::cin >> end;
-        //if(end == 'y')
-           // break;
-        std::cin >> x;
-        if(x != -666666) {
+    BiNode *node = NULL;
+    int x = 0;
+    printf("input integers(-666 is nil, -333 is end):");
+    std::cin >> x;
+    while(x != -333) {
+        if(x != -666) {
             node = new BiNode();
             if(node != NULL) {
                 node->x = x;
@@ -69,6 +61,7 @@ BiNode* createBinaryTreebyLayerOrder()
             node = NULL;
             treeVec.push_back(node);
         }
+        std::cin >> x;
     }
 
     BiNode *root = NULL;
@@ -199,7 +192,7 @@ void visitBiTreebyPreOrderunRecur(BiNode* root)
             }
             vNode->rHanded = true;
         } else {
-            delete vNode->node;
+            delete vNode;
             vec.pop();
         }
     }
