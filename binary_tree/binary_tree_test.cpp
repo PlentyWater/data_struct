@@ -3,7 +3,8 @@
 
 int main()
 {
-    BiNode *root = createBinaryTreebyLayerOrder();
+    const char *file = "trees/tree1.txt";
+    BiNode *root = createBinaryTreebyLayerOrderfromFile(file);
     printf("layer order:\n");
     printBiTreeByLayerOrder(root);
     printf("Pre order:\n");

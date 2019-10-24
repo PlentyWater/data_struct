@@ -82,6 +82,62 @@ BiNode* createBinaryTreebyLayerOrder()
     printf("root->lchild:%p, root->rchild:%p\n", root->lChild, root->rChild);
     return root;
 }
+
+BiNode* createBinaryTreebyLayerOrderfromFile(const char *file)
+{
+    if(file == NULL)
+        return NULL;
+    FILE *pf = fopen(file, "rb");
+    if(pf == NULL) {
+        printf("open file failed\n");
+        return NULL;
+    }
+
+    std::vector<BiNode*> treeVec;
+    char treeBuf[1000] = {0};
+    char tmpBuf[20] = {0};
+    int i = 0,k = 0;
+    fread(treeBuf, 1, 1000, pf);
+    fclose(pf);
+    while(i < 1000){
+        while((tmpBuf[k] = treeBuf[i]) != ' ' && tmpBuf[k] != '\n'){
+            i++;
+            k++;
+        }
+        tmpBuf[++k] = '\0';
+        printf("%s ", tmpBuf);
+        if(tmpBuf[0] <= '9' && tmpBuf[0] >= '0'){
+            int x = atoi(tmpBuf);
+            BiNode *node = new BiNode();
+            node->x = x;
+            treeVec.push_back(node);
+        } else if(tmpBuf[0] == 'e'){
+            break;
+        } else {
+            BiNode *node = NULL;
+            treeVec.push_back(node);
+        }
+        i++;
+        k = 0;
+    }
+
+    printf("\n");
+    BiNode *root = NULL;
+    if(treeVec.size() > 0) {
+        root = treeVec[0];
+        BiNode *fatherNode = NULL;
+        BiNode *childNode = NULL;
+        int c = 1;
+        for(int i = 0; i < treeVec.size(); i++) {
+            fatherNode = treeVec[i];
+            if(fatherNode != NULL) {
+                fatherNode->lChild = treeVec[c++];
+                fatherNode->rChild = treeVec[c++];
+            }
+        }
+    }
+    return root;
+}
 void _printBiTreePreOrder(BiNode *root)
 {
     if(root == NULL)

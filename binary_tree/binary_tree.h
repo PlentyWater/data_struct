@@ -7,7 +7,7 @@ typedef struct BiTreeNode
     BiTreeNode *rChild;
     int x;
 }BiNode;
-
+BiNode* createBinaryTreebyLayerOrderfromFile(const char *file);
 BiNode* createABinaryTreebyPosOrder();
 BiNode* createBinaryTreebyLayerOrder();
 void printBiTreePreOrder(BiNode* root);
